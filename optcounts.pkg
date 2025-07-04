@@ -1,6 +1,6 @@
 v 3
-d optcount: Generate enumerator bias reports
+d optcounts: Generate enumerator bias reports
 d distribution-date: 2024-07-04
-f src/optcount.ado
-f src/optcount.sthlp
+f src/optcounts.ado
+f src/optcounts.sthlp
 f examples/example.do

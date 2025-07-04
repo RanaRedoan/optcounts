@@ -27,14 +27,15 @@
 
 {title:Examples}
 
-{phang}{cmd:. use "Final BYP surveydata.dta", clear}{p_end}
-{phang}{cmd:. optcounts -99 99 -999 -98, enum(a01)}{p_end}
+{phang}{cmd:. use "Dataset.dta", clear}{p_end}
+{phang}{cmd:. optcounts -99 99 -999 -98, enum(interviewer_name)}{p_end}
 
 {title:Author}
 
 {p 4 4 2}Md. Redoan Hossain Bhuiyan{break}
 redoanhossain@gmail.com{p_end}
+Whatsapp: +8801675735811{p_end}
 
 {title:Also see}
 
-{p 4 13 2}Online: {help tabulate}, {help collapse}{p_end}
+{p 4 13 2}Online: {help biascheck}, {help collapse}{p_end}

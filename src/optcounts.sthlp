@@ -34,7 +34,7 @@
 
 {p 4 4 2}Md. Redoan Hossain Bhuiyan{break}
 redoanhossain@gmail.com{p_end}
-Whatsapp: +8801675735811{p_end}
+
 
 {title:Also see}
 

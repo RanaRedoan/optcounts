@@ -20,4 +20,4 @@ This repository contains a Stata program, `optcounts`, designed to analyze surve
 Run the following command in Stata after loading your dataset:
 
 ```stata
-optcounts -99 99 -999 -98, enum(a01)
+optcounts -99 99 -999 -98, enum(interviewer_name)

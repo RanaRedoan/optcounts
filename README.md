@@ -8,6 +8,7 @@ This repository contains a Stata program, `optcounts`, designed to analyze surve
 - `optcounts.sthlp`: The help file for Stata documentation.
 - `example.do`: A detailed example script demonstrating usage with sample data.
 - `readme.md`: This file, providing an overview of the repository.
+- `LICENSE.md`: The license governing the use of this software.
 
 ## Installation
 

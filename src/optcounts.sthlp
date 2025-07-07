@@ -27,8 +27,9 @@
 
 {title:Examples}
 
-{phang}{cmd:. use "Dataset.dta", clear}{p_end}
+
 {phang}{cmd:. optcounts -99 99 -999 -98, enum(interviewer_name)}{p_end}
+{phang}{cmd:. optcounts 99, enum(interviewer_name)}{p_end}
 
 {title:Author}
 

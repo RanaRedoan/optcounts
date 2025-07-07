@@ -37,8 +37,7 @@
 Md. Redoan Hossain Bhuiyan{p_end}
 {p 4 4 2}
 Email: redoanhossain630@gmail.com{p_end}
-{p 4 4 2}
-Whatsapp: +8801675735811{p_end}
+
 
 
 {title:Also see}

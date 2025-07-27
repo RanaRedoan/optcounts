@@ -1,16 +1,16 @@
-*! version 1.2.0 04jul2025
+*! version 1.2.1 05jul2025
 program define optcounts
     version 17
     
     syntax [anything(name=values id="special values")] , ENUMerator(varname)
     
-    * Validate input
+    * Validate input - no change needed here
     if `"`values'"' == "" {
         di as error "Error: Please specify at least one special value to count."
         exit 198
     }
     
-    * Parse values into a local macro list
+    * Parse values into a local macro list - no change needed here
     local value_count : word count `values'
     if `value_count' == 0 {
         di as error "Error: No valid values specified."
@@ -69,10 +69,21 @@ program define optcounts
     }
     
     * Generate total surveys per enumerator
-    bysort `enumerator': gen survey_count = _N
+    * MODIFIED: Create string version of enumerator for grouping
+    tempvar enum_str
+    capture confirm string variable `enumerator'
+    if _rc == 0 {
+        clonevar `enum_str' = `enumerator'
+    }
+    else {
+        tostring `enumerator', gen(`enum_str') force
+    }
+    
+    bysort `enum_str': gen survey_count = _N
     
     * Collapse to get counts by enumerator
-    collapse (sum) total_special (firstnm) survey_count, by(`enumerator')
+    collapse (sum) total_special (firstnm) survey_count, by(`enum_str')
+    rename `enum_str' `enumerator'
     
     * Sort and display results
     sort total_special

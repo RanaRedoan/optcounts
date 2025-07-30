@@ -1,4 +1,4 @@
-*! version 1.2.0 04jul2025
+*! version 1.2.2 30Jul2025
 program define optcounts
     version 17
     
@@ -32,8 +32,21 @@ program define optcounts
         exit 198
     }
     
-    * Create a temporary dataset to store counts
+    * Preserve the original data
     preserve
+    
+    * Handle string enumerator variable by creating numeric copy
+    tempvar enum_num
+    capture confirm string variable `enumerator'
+    if !_rc {
+        encode `enumerator', gen(`enum_num')
+        local enum_var `enum_num'
+        local is_string_enumerator 1
+    }
+    else {
+        local enum_var `enumerator'
+        local is_string_enumerator 0
+    }
     
     * Initialize count variable
     gen total_special = 0
@@ -55,29 +68,44 @@ program define optcounts
         }
         capture confirm string variable `var'
         if _rc == 0 {
-            * Convert string values to numeric for comparison (assuming valid numbers)
+            * Convert string values to numeric for comparison
             quietly {
-                destring `var', replace ignore(" ") force
+                tempvar numeric_var
+                gen `numeric_var' = real(`var')
                 gen temp_count = 0
                 foreach val of local value_list {
-                    replace temp_count = temp_count + 1 if `var' == `val'
+                    replace temp_count = temp_count + 1 if `numeric_var' == `val' & !missing(`numeric_var')
                 }
                 replace total_special = total_special + temp_count
-                drop temp_count
+                drop temp_count `numeric_var'
             }
         }
     }
     
     * Generate total surveys per enumerator
-    bysort `enumerator': gen survey_count = _N
+    bysort `enum_var': gen survey_count = _N
     
-    * Collapse to get counts by enumerator
-    collapse (sum) total_special (firstnm) survey_count, by(`enumerator')
+    * Handle string enumerator case without nested preserve
+    if `is_string_enumerator' {
+        tempfile temp_results
+        collapse (sum) total_special (firstnm) survey_count, by(`enum_var')
+        decode `enum_var', gen(`enumerator')
+        keep `enumerator' survey_count total_special
+        save "`temp_results'"
+        restore
+        
+        * Load and display the results
+        preserve
+        use "`temp_results'", clear
+    }
+    else {
+        collapse (sum) total_special (firstnm) survey_count, by(`enumerator')
+    }
     
     * Sort and display results
     sort total_special
     list `enumerator' survey_count total_special, noobs separator(0) abbreviate(12)
     
     * Clean up
-    restore, not
+    restore
 end

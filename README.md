@@ -1,24 +1,65 @@
-# optcounts
+# 📊 optcounts: Count Special Values per Enumerator in Survey Data
 
-This repository contains a Stata program, `optcounts`, designed to analyze survey data by counting user-specified special value selections per enumerator.
+`optcounts` is a Stata program that counts **user-specified special values** (e.g., -99, 99, -999) across all variables in your survey dataset, **grouped by enumerator**.  
+It helps researchers quickly identify data quality issues, unusual codes, and patterns across enumerators.
 
-## Files
+---
 
-- `optcounts.ado`: The Stata program file for counting special values (e.g., -99, 99, -999) across all variables per enumerator.
-- `optcounts.sthlp`: The help file for Stata documentation.
-- `example.do`: A detailed example script demonstrating usage with sample data.
-- `readme.md`: This file, providing an overview of the repository.
-- `LICENSE.md`: The license governing the use of this software.
+## 🚀 Installation
 
-## Installation
-
-1. Clone or download this repository to your local machine.
-2. Place the `optcounts.ado` file in your Stata ado path (run `sysdir` in Stata to find it, e.g., `~/ado/personal/`).
-3. Install the help file by placing `optcounts.sthlp` in the same directory or your Stata help path.
-
-## Usage
-
-Run the following command in Stata after loading your dataset:
+You can install the command directly from GitHub:
 
 ```stata
-optcounts -99 99 -999 -98, enum(interviewer_name)
+net install optcounts, from("https://raw.githubusercontent.com/RanaRedoan/optcounts/main") replace
+
+---
+## 📖 Syntax
+
+```stata
+net install optcounts, from("https://raw.githubusercontent.com/RanaRedoan/optcounts/main") replace
+
+---
+
+---
+## 📌 Option
+
+### Required
+`by(enumerator_variable)` → Enumerator identifier variable (e.g., interviewer ID)
+
+### Optional
+`special_values` → Space-separated list of numeric values to count (e.g., -99 99 -999). At least one value must be provided.
+
+---
+
+## 📊 Description
+
+`optcounts` scans all variables in your dataset and counts occurrences of user-defined special values per enumerator.
+It works with both numeric and string enumerator variables (automatically encoding strings if needed).
+
+### Researchers can use this tool to:
+✅ Identify enumerators with unusually high or low counts of special values
+✅ Detect potential data entry errors or coding inconsistencies
+✅ Summarize survey completion or missing data patterns
+✅ Monitor and improve data quality across enumerators
+
+## 💻 Examples
+Basic usage: count multiple special values per enumerator
+```stata
+optcounts -99 99 -999 -98, by(interviewer_name)
+---
+Count a single special value
+```stata
+optcounts -99, by(interviewer_name)
+---
+
+## 🤝 Contribution
+Pull requests and suggestions are welcome!
+If you find issues or have feature requests, please open an Issue in the repository.
+
+## 👨‍💻 Author
+  Md. Redoan Hossain Bhuiyan
+📧 redoanhossain630@gmail.com
+
+ ## 📌 License
+
+This project is licensed under the MIT License.

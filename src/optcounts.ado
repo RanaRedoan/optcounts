@@ -1,9 +1,11 @@
-*! version 1.2.2 30Jul2025
+*! version 1.3 30Jul2025
+*! Author : Md. Redoan Hossain Bhuiyan
+
 program define optcounts
     version 17
     
-    syntax [anything(name=values id="special values")] , ENUMerator(varname)
-    
+    syntax [anything(name=values id="special values")] , BY(varname)
+
     * Validate input
     if `"`values'"' == "" {
         di as error "Error: Please specify at least one special value to count."
@@ -36,16 +38,16 @@ program define optcounts
     preserve
     
     * Handle string enumerator variable by creating numeric copy
-    tempvar enum_num
-    capture confirm string variable `enumerator'
+    tempvar by_num
+    capture confirm string variable `by'
     if !_rc {
-        encode `enumerator', gen(`enum_num')
-        local enum_var `enum_num'
-        local is_string_enumerator 1
+        encode `by', gen(`by_num')
+        local by_var `by_num'
+        local is_string_by 1
     }
     else {
-        local enum_var `enumerator'
-        local is_string_enumerator 0
+        local by_var `by'
+        local is_string_by 0
     }
     
     * Initialize count variable
@@ -83,14 +85,14 @@ program define optcounts
     }
     
     * Generate total surveys per enumerator
-    bysort `enum_var': gen survey_count = _N
+    bysort `by_var': gen survey_count = _N
     
     * Handle string enumerator case without nested preserve
-    if `is_string_enumerator' {
+    if `is_string_by' {
         tempfile temp_results
-        collapse (sum) total_special (firstnm) survey_count, by(`enum_var')
-        decode `enum_var', gen(`enumerator')
-        keep `enumerator' survey_count total_special
+        collapse (sum) total_special (firstnm) survey_count, by(`by_var')
+        decode `by_var', gen(`by')
+        keep `by' survey_count total_special
         save "`temp_results'"
         restore
         
@@ -99,12 +101,12 @@ program define optcounts
         use "`temp_results'", clear
     }
     else {
-        collapse (sum) total_special (firstnm) survey_count, by(`enumerator')
+        collapse (sum) total_special (firstnm) survey_count, by(`by')
     }
     
     * Sort and display results
     sort total_special
-    list `enumerator' survey_count total_special, noobs separator(0) abbreviate(12)
+    list `by' survey_count total_special, noobs separator(0) abbreviate(12)
     
     * Clean up
     restore

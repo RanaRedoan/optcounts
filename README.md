@@ -11,13 +11,13 @@ You can install the command directly from GitHub:
 
 ```stata
 net install optcounts, from("https://raw.githubusercontent.com/RanaRedoan/optcounts/main") replace
-
+```
 ---
 ## 📖 Syntax
 
 ```stata
 net install optcounts, from("https://raw.githubusercontent.com/RanaRedoan/optcounts/main") replace
-
+```
 ---
 
 ---
@@ -46,10 +46,12 @@ It works with both numeric and string enumerator variables (automatically encodi
 Basic usage: count multiple special values per enumerator
 ```stata
 optcounts -99 99 -999 -98, by(interviewer_name)
+```
 ---
 Count a single special value
 ```stata
 optcounts -99, by(interviewer_name)
+```
 ---
 
 ## 🤝 Contribution
@@ -63,3 +65,4 @@ If you find issues or have feature requests, please open an Issue in the reposit
  ## 📌 License
 
 This project is licensed under the MIT License.
+

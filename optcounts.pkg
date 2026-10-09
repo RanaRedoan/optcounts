@@ -1,5 +1,5 @@
 v 3
-d optcounts: Generate enumerator bias reports
+d optcounts: Count special values (-99, 99, ...) per enumerator
 d distribution-date: 2024-07-04
 f src/optcounts.ado
 f src/optcounts.sthlp

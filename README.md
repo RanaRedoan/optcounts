@@ -16,18 +16,16 @@ net install optcounts, from("https://raw.githubusercontent.com/RanaRedoan/optcou
 ## 📖 Syntax
 
 ```stata
-net install optcounts, from("https://raw.githubusercontent.com/RanaRedoan/optcounts/main") replace
+optcounts special_values, by(enumerator_variable)
 ```
 ---
 
----
-## 📌 Option
+## 📌 Options
 
 ### Required
-`by(enumerator_variable)` → Enumerator identifier variable (e.g., interviewer ID)
-
-### Optional
 `special_values` → Space-separated list of numeric values to count (e.g., -99 99 -999). At least one value must be provided.
+
+`by(enumerator_variable)` → Enumerator identifier variable (e.g., interviewer ID)
 
 ---
 
